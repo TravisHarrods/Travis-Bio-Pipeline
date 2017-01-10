@@ -1,0 +1,7 @@
+bin/bioPipeline.pl
+Build.PL
+lib/Travis/Bio/Pipeline.pm
+lib/Travis/Bio/Pipeline/Plugin.pm
+lib/Travis/Bio/Pipeline/plugins/IO.pm
+MANIFEST			This list of files
+README.md
