@@ -1,7 +1,7 @@
 package Travis::Bio::Pipeline::Plugin;
 
 #==============================================================================
-# Travis::Bio::Pipeline::Plugin is the main plugin class that is inherited 
+# Travis::Bio::Pipeline::Plugin is the main plugin class that is inherited
 # in each sub-plugin of the validator tool.
 #
 # Author: Hugo Devillers

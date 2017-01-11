@@ -1,4 +1,4 @@
-package  Travis::Bio::Pipeline::plugins::IO;
+package  Travis::Bio::Pipeline::Plugin::IO;
 use Moose;
 use Travis::Utilities::Log;
 
