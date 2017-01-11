@@ -5,7 +5,7 @@ package Travis::Bio::Pipeline;
 #
 # Author: Hugo Devillers, Travis Harrods
 # Created: 14-MAR-2016
-# Updated: 10-JAN-2017
+# Updated: 11-JAN-2017
 #==============================================================================
 
 #==============================================================================
@@ -13,14 +13,14 @@ package Travis::Bio::Pipeline;
 #==============================================================================
 use Moose;
 use Travis::Utilities::Log;
+use Travis::Utilities::Files;
 
 # Inherit from sequenceFactory
 extends 'Travis::Bio::SequenceFactory';
 
 # Plugin manager
-use Module::Pluggable search_path => 'Travis::Bio::Pipeline::plugins', sub_name => 'buildin_plugins', require => 1;
+use Module::Pluggable sub_name => 'search_plugins', require => 1;
 
-# Init log manager
 my $log = Travis::Utilities::Log->new();
 
 #==============================================================================
@@ -41,6 +41,13 @@ has 'plugins' => (
               }
 );
 
+# Path to user plugin directory
+has 'user_plugins' => (
+  is      => 'ro',
+  isa     => 'Str',
+  default => ''
+);
+
 # Pipeline instructions
 has 'pipeline' => (
    is      => 'rw',
@@ -52,11 +59,27 @@ has 'pipeline' => (
 # BUILDER
 #==============================================================================
 sub BUILD {
-   my $self = shift;
+  my $self = shift;
 
-   # Load buildin plugins
-   my @plugins = $self->buildin_plugins();
-   $self->_loadPlugins(\@plugins, 'Buildin');
+  # Load buildin plugins
+  my @plugins = $self->search_plugins();
+  $self->_loadPlugins(\@plugins, 'Build-in');
+
+  # Load user plugins (if necessary)
+  if( $self->user_plugins() ne '' ) {
+
+      # Look for plugin(s) from the provided path
+      $self->search_path( new => $self->user_plugins() );
+      @plugins = $self->search_plugins();
+
+      if( scalar(@plugins) > 0 ) {
+        # Load the found plugins
+        $self->_loadPlugins(\@plugins, 'User');
+      } else {
+        $log->warning('The provided path ('.$self->user_plugins().
+          ') does not contain any plugin or it is not a regular path.');
+      }
+  }
 
 
 }
@@ -99,7 +122,6 @@ sub _loadPlugins {
       }
    }
 }
-
 
 # Check if the povided pipeline is a file and load it
 sub _lookForPipelineFile {

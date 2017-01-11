@@ -14,18 +14,18 @@ my $log = Travis::Utilities::Log->new();
 my $input  = ''; # An input path (single file, list of files, directory, ...)
 my $output = ''; # An output path to a directory
 my $format = ''; # A standard file format
-
+my $user_plugins = ''; # A path to user additional plugins
 my $pipeline = '';
-
 my $list_plugins; # Boolean indicating if plugin list had to be shown
 
 eval {
    GetOptions(
-      '-input|i=s'      => \$input,
-      '-output|o=s'     => \$output,
-      '-format|f=s'     => \$format,
-      '-pipeline|p=s'   => \$pipeline,
-      '-list-plugins|l' => \$list_plugins
+      '-input|i=s'        => \$input,
+      '-output|o=s'       => \$output,
+      '-format|f=s'       => \$format,
+      '-pipeline|p=s'     => \$pipeline,
+      '-user-plugins|u=s' => \$user_plugins,
+      '-list-plugins|l'   => \$list_plugins
    );
 };
 if( $@ ) {
@@ -33,21 +33,24 @@ if( $@ ) {
 }
 # Only show the list of plugins
 if( defined($list_plugins) ) {
-   my $bs = Travis::Bio::Pipeline->new();
-   $bs->listPlugins();
-   exit(1);
+  my $bs = Travis::Bio::Pipeline->new(
+    user_plugins => $user_plugins
+  );
+  $bs->listPlugins();
+  exit(1);
 }
 
 # No help or plugin list asked
 if($input eq '') {
-   $log->fatal('You must provide an input path/file.');
+  $log->fatal('You must provide an input path/file.');
 }
 
 $log->info('Reading input sequences...');
-my $bs = Travis::Bio::Pipeline->new( 
-   input            => $input,
-   format           => $format,
-   pipeline         => $pipeline
+my $bs = Travis::Bio::Pipeline->new(
+  input            => $input,
+  format           => $format,
+  pipeline         => $pipeline,
+  user_plugins     => $user_plugins
 );
 
 
