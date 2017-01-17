@@ -25,11 +25,7 @@ sub features {
    my $self = shift;
    my $sf   = shift;
 
-   foreach my $kv ( $sf->listSequenceIndex() ) {
-      my $seq_id = $kv->[0];
-      my $index  = $kv->[1];
-      $log->info('Sorting features of sequence '.$seq_id.'...');
-
-      $sf->sequences()->[$index]->sortFeatures();
-   }
+   $log->info('Starting features method from Sort plugin...');
+   $sf->sortSequenceFeatures();
+   
 }
