@@ -221,9 +221,10 @@ sub executePipeline {
 
                # Insert the callback into the pipeline list
                if( $callback ) {
+                 if( $callback ne '1' ) {
                   my @cb_list = split(/\s{0,}\+\s{0,}/, $callback);
                   unshift @pipeline_list, @cb_list;
-
+                }
                }
             }
             else {
