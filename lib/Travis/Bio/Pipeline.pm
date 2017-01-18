@@ -216,6 +216,8 @@ sub executePipeline {
 
             # Check if the queried method exists
             if( $p->can($run_method) ) {
+               $log->info('* Running method '.$run_method.' from plugin '.
+                $plugin_name.'...');
                # Run it and catch potential callback
                my $callback = $p->$run_method( $self );
 

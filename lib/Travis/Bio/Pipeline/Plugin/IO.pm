@@ -24,6 +24,5 @@ sub writeAll {
    my $self = shift;
    my $sf   = shift; # the sequence factory
 
-   $log->info('Starting writeAll method from IO plugin...');
    $sf->writeSequences();
 }

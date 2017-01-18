@@ -25,7 +25,7 @@ sub features {
    my $self = shift;
    my $sf   = shift;
 
-   $log->info('Starting features method from Sort plugin...');
+   # Use the sorting method directly from the SequenceFactory object
    $sf->sortSequenceFeatures();
-   
+
 }
