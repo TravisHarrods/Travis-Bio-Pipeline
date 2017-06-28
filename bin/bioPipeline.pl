@@ -1,10 +1,19 @@
 #!/usr/bin/env perl
 
+=pod
+
+=head1 NAME
+
+bioPipeline.pl - Main script to launch bioPipeline tools.
+
+=cut
+
 use 5.014;
 use strict;
 use warnings;
 
 use Getopt::Long;
+use Pod::Usage qw(pod2usage);
 
 use Travis::Utilities::Log;
 use Travis::Bio::Pipeline;
@@ -17,6 +26,7 @@ my $format = ''; # A standard file format
 my $user_plugins = ''; # A path to user additional plugins
 my $pipeline = '';
 my $list_plugins; # Boolean indicating if plugin list had to be shown
+my $help;
 
 eval {
    GetOptions(
@@ -25,11 +35,16 @@ eval {
       '-format|f=s'       => \$format,
       '-pipeline|p=s'     => \$pipeline,
       '-user-plugins|u=s' => \$user_plugins,
-      '-list-plugins|l'   => \$list_plugins
+      '-list-plugins|l'   => \$list_plugins,
+      '-help|h'           => \$help
    );
 };
 if( $@ ) {
    $log->fatal('Argument value error: '.$@);
+}
+# Show usage
+if( defined($help) ) {
+  pod2usage( -verbose => 1 );
 }
 # Only show the list of plugins
 if( defined($list_plugins) ) {

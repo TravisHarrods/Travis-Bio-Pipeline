@@ -2,6 +2,9 @@ bin/bioPipeline.pl
 Build.PL
 lib/Travis/Bio/Pipeline.pm
 lib/Travis/Bio/Pipeline/Plugin.pm
+lib/Travis/Bio/Pipeline/Plugin/IO.pm
+lib/Travis/Bio/Pipeline/Plugin/Sort.pm
+lib/Travis/Bio/Pipeline/Plugin/Stat.pm
 lib/Travis/Bio/Pipeline/plugins/IO.pm
 MANIFEST			This list of files
 README.md
