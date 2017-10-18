@@ -6,6 +6,17 @@
 
 bioPipeline.pl - Main script to launch bioPipeline tools.
 
+=head1 SYNOPSIS
+
+bioPipeline.pl -i sequence_file(s) [-o output_path] -p pipeline_instructions
+
+=head1 OPTIONS AND ARGUMENTS
+
+=head2 -h|--help
+
+Show this help section.
+
+
 =cut
 
 use 5.014;
@@ -44,7 +55,7 @@ if( $@ ) {
 }
 # Show usage
 if( defined($help) ) {
-  pod2usage( -verbose => 1 );
+  pod2usage( -verbose => 3 );
 }
 # Only show the list of plugins
 if( defined($list_plugins) ) {
